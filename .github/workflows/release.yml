@@ -19,6 +19,9 @@ jobs:
     - name: Get version from tag
       id: get_version
       run: echo ::set-env name=VERSION::$(echo ${GITHUB_REF#*/v})
+    - name: Get git SHA
+      id: get_sha
+      run: echo ::set-env name=GITHUB_SHA::$(echo ${GITHUB_SHA} | cut -c1-8)
     - name: Get major version
       id: get_major_version
       run: echo ::set-env name=MAJOR_VERSION::$(echo ${{ env.VERSION }} | grep -o '[^-]*$' | cut -d. -f1)
@@ -36,5 +39,5 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         workdir: ${{ env.MAJOR_MINOR_VERSION }}/${{ matrix.distro }}/${{ matrix.flavor }}
         buildargs: MLFLOW_VERSION=${{ env.VERSION }}
-        buildoptions: "--label GITHUB_SHA=${GITHUB_SHA} --label MLFLOW_RELEASE=https://github.com/mlflow/mlflow/releases/tag/${{ env.VERSION }}"
+        buildoptions: "--label GITHUB_SHA=${{ env.GITHUB_SHA }} --label MLFLOW_RELEASE=https://github.com/mlflow/mlflow/releases/tag/${{ env.VERSION }}"
         tags: "${{ env.VERSION }}-${{ matrix.distro }}-${{ matrix.flavor }},${{ env.MAJOR_MINOR_VERSION }}-${{ matrix.distro }}-${{ matrix.flavor }}"
