@@ -6,8 +6,7 @@ RUN set -eux; \
     useradd -r -g mlflow -u 999 mlflow
 
 # https://github.com/mlflow/mlflow/releases
-ENV MLFLOW_VERSION_MAJOR 1.9
-ENV MLFLOW_VERSION 1.9.1
+ARG MLFLOW_VERSION
 
 # Note: mlflow[extras] includes scikit-learn
 RUN set -eux; \
