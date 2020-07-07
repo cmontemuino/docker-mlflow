@@ -27,7 +27,7 @@ If you want to get access to the metadata and artifacts (e.g., to make backups),
 
 ```script
 mkdir store
-docker run --rm -d -v $(pwd)/store:/store -e BACKEND_STORE=/store cmontemuino/mlflow:1.9-buster-fs
+docker run --rm -d -v "$(pwd)/store":/store -e BACKEND_STORE=/store cmontemuino/mlflow:1.9-buster-fs
 ```
 
 ### Accessing the UI
