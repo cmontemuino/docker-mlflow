@@ -1,0 +1,35 @@
+name: Publish Docker Images
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    strategy:
+      matrix:
+        mlflow-version: [1.9.1]
+        distro: [buster]
+        flavor: [file-store]
+      max-parallel: 2
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@master
+    - name: Get major version
+      id: get_major_version
+      run: echo ::set-env name=MAJOR_VERSION::$(echo ${{ matrix.mlflow-version }} | grep -o '[^-]*$' | cut -d. -f1)
+    - name: Get minor version
+      id: get_minor_version
+      run: echo ::set-env name=MINOR_VERSION::$(echo ${{ matrix.mlflow-version }} | grep -o '[^-]*$' | cut -d. -f2)
+    - name: Get major_minor version
+      id: get_major_minor_version
+      run: echo ::set-env name=MAJOR_MINOR_VERSION::$(echo ${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }})
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: cmontemuino/mlflow
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        workdir: ${{ env.MAJOR_MINOR_VERSION }}/${{ matrix.distro }}/${{ matrix.flavor }}
+        tags: "${{ matrix.mlflow-version }}-${{ matrix.distro }}-${{ matrix.flavor }},${{ env.MAJOR_MINOR_VERSION }}-${{ matrix.distro }}-${{ matrix.flavor }}"
