@@ -15,7 +15,7 @@ RUN set -eux; \
     mlflow --version
 
 # Default location where MLflow stores data locally
-ENV BACKEND_STORE mlruns
+ENV BACKEND_STORE /mlruns
 
 RUN mkdir /mlruns; \
     chown mlflow:mlflow /mlruns
