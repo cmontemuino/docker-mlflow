@@ -1,6 +1,6 @@
 # Docker Image for MLflow
 
-[![GitHub license](https://img.shields.io/github/license/cmontemuino/docker-mlflow?color=blue)](https://github.com/cmontemuino/docker-mlflow/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/cmontemuino/docker-mlflow?color=blue)](https://github.com/cmontemuino/docker-mlflow/blob/master/LICENSE) ![Publish Docker Images](https://github.com/cmontemuino/docker-mlflow/workflows/Publish%20Docker%20Images/badge.svg) ![Docker Pulls](https://img.shields.io/docker/pulls/cmontemuino/mlflow)
 
 This is the Docker Image for [MLflow].
 
